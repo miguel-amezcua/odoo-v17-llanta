@@ -1,0 +1,89 @@
+<data inherit_id="stock.report_delivery_document">
+        <xpath expr="//t[2]" position="before">
+            <t t-if="o.picking_type_code == 'outgoing'">
+                <div class="col-12 text-center" style=""><h2>ENTREGA DE MERCANCIA</h2></div>
+            </t>
+        </xpath>
+        <xpath expr="//t[contains(@t-set, 'partner')]" position="after">
+            <t t-if="o.state != 'done' and o.picking_type_code == 'outgoing'"> 
+                <div class="p-3 mb-2 bg-danger text-white text-center">
+                    <h3>No valido para entrega</h3>
+                </div>
+            </t>
+        </xpath>
+        <xpath expr="//div[@class='oe_structure']" position="before">
+            <t t-if="o.picking_type_code in ['outgoing', 'incoming']">
+                <div name="the_route_ids">
+                    <strong>Ruta de destino: </strong>
+                    <span t-field="o.move_ids.route_ids"/>
+                </div>
+            </t>
+        </xpath>
+        <xpath expr="//table[@name='stock_move_line_table']/thead/tr" position="inside">
+            <t t-if="o.picking_type_code == 'outgoing' and o.state == 'done'">
+                <th><strong>Validación</strong></th>
+            </t>
+        </xpath>
+        <xpath expr="//t[@name='aggregated_move_lines']" position="after">
+            <tr>
+                <t t-set="line_e" t-value="0.0"/>
+                <t t-foreach="move_line_ids" t-as="line">
+                    <t t-set="line_e" t-value="line_e+line.quantity"/>
+                </t>
+                <td><strong>Total:</strong></td>
+                <td/>
+                <t t-if="o.l10n_mx_edi_cfdi_state == 'sent'">
+                    <td/>
+                </t>
+                <td class="text-center border-black"><strong>Total Entregado:</strong>
+                    <span t-esc="line_e"/>
+                </td>
+            </tr>
+        </xpath>
+        <xpath expr="//table[@name='stock_move_table']/tbody/tr" position="after">
+            <tr t-if="o.picking_type_code in ['outgoing', 'incoming']" class="total_quantity text-end">
+                <t t-set="line_o" t-value="0.0"/>
+                <t t-set="line_e" t-value="0.0"/>
+                <t t-foreach="lines" t-as="line">
+                    <t t-set="line_e" t-value="line_e+line.quantity"/>
+                    <t t-set="line_o" t-value="line_o+line.product_uom_qty"/>
+                </t>
+                <td><strong>Totales:</strong></td>
+                <td class="text-center border-black"><strong>Total Ordenado:</strong>
+                    <span t-esc="line_o"/>
+                </td>
+                <td class="text-center border-black"><strong>Total Entregado:</strong>
+                    <span t-esc="line_e"/>
+                </td>
+            </tr>
+        </xpath>
+        <xpath expr="//table[@name='delivery_guide_table']" position="after">
+            <t t-if="o.picking_type_code == 'outgoing' and o.state == 'done'">
+                <table border="0" style="border-collapse:collapse;color:000000; width='100%'" name="table_name_user_resp">
+                    <tr>
+                        <div>
+                            <td class="text-center">
+                                <strong>Recibe</strong>
+                                <br/><br/><br/>
+                                <br/><br/><br/>
+                                <strong>Firma: _________________________________</strong>
+                                <br/><br/>
+                                <strong>     Nombre: ________________________________________     </strong>
+                                <br/><br/>
+                            </td>
+                        </div>
+                        <div>
+                            <td class="text-center">
+                                <strong>Sello</strong>
+                                <br/><br/><br/>
+                                <br/><br/><br/>
+                                <br/><br/><br/>
+                                <strong>      Fecha: _________________________________________      </strong>
+                                <br/>
+                            </td>
+                        </div>
+                    </tr>
+                </table>
+            </t>
+        </xpath>
+    </data>
