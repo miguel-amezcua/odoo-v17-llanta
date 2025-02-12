@@ -1,0 +1,8 @@
+q
+<data inherit_id="stock_report_delivery_has_serial_move_line">
+    <xpath expr="//td[@name='move_line_lot_quantity']" position="inside">
+        <t t-if="o.l10n_mx_edi_cfdi_state != 'sent'">
+            <td/>
+        </t>
+    </xpath>
+</data>
