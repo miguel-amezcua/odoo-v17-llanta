@@ -1,0 +1,22 @@
+Inventario/Información Genral/ Solicitud de material
+caso detectado en:                    1520-Interlomas
+
+Error:                                Registro faltante
+Contenido:                            El registro no existe o se elimino.
+	                          			   (Registro: Stock.warehouse.orderpoint(1048699), Usiario: 33)
+captura:
+
+       
+    
+Solicitud original del cliente.
+
+Hola, buena tarde.
+
+El motivo de mi correo es para solicitar su ayuda, el día de hoy al solicitar insumos para el pedido de mañana, no me permitió solicitar contrapeso con el código “1570”, me arrojaba este error.
+
+Puede ayudarme con ese error para poder solicitarlo por favor.
+
+Quedo atenta, saludos!
+
+ 
+Solucion: 
