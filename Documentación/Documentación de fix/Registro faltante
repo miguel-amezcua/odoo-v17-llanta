@@ -20,3 +20,16 @@ Quedo atenta, saludos!
 
  
 Solucion: 
+generacion de reglas de reordenamiento definiendo el producto en la ubicacion solicitada.
+
+ruta :Inventario(o)Ventas/produtos/
+
+* Seleccionamos el producto solicitado por la ubicación a reabastecer.
+* Boton "Reglas de reordenamiento"
+
+* Nuevo, ingresarla información solicitada, informacion obligatoria (Producto, Ubicación, Cantidad minima, Cantidad Maxima)
+* Guardar 
+
+recargar la solicitud de material, volver a ingresar  
+
+
