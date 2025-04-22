@@ -1,0 +1,45 @@
+#En los movimientos de salida de mercancía (out) deben de pertenecer a un flujo de compra, venta o movimiento de inventario, derivado de una solicitud de reabastecimiento, 
+#ajuste de mercancía,  o devolución, ya que una salida de mercancía debe de estar correctamente referenciada la trazabilidad de el motivo de la salida de la misma, 
+#ya que puede ser un movimiento similar a un ajuste.  
+
+#La creación de movimientos generados directamente desde movimientos de salida sin pertenecer a algún proceso definido se da en el caso de la mercancía con consigna, 
+#la cual se almacena en nuestras instalaciones, pero es resguardada bajo la categoría de consigna, solo estos movimientos pueden ser generados de manera directa o sin la necesidad 
+#de tener un documento de origen o una trazabilidad definida dentro del sistema, estas operaciones también están justificadas ya que esta mercancía solo es 
+#manejado por un usuario definido encargada de estas mercancia y movimientos relacionados con el proveedor          
+
+#Se solicita que si el movimiento de almacén de salida (out) de mercancía es generado de forma manual (no cuente con documento de origen), 
+#solo se puedan seleccionar productos de categoría señalada como consigna. 
+
+#Se solicita que si el movimiento de almacén de salida (out) de mercancía es generado de forma manual (no cuente con documento de origen),  
+#si en alguna de las lineas de producto se encuentra algún producto que no pertenezca a la  categoría señalada como consigna, 
+#no se podrá guardar los cambios ni validar el documento, por medio de una ventana de diálogo especificando el producto que no pertenece a la categoría de consigna.   
+
+#En donde se valida que si es un movimiento tipo out y este no tiene un documento de origen 
+#todos los productos ingresados deberán de ser de tipo de consigna, 
+#de lo contrario al momento de guardar los cambios, validar, comprobar disponibilidad, te aparecerá un letrero de alerta indicándonos que ese producto no pertenece a consignas 
+#impidiendo guardar los cambios o en su defecto obligando a descartar los cambios realizados.
+
+ 
+
+#agradezco sus observaciones y comentarios 
+
+[MA]Movimeintos de consignas
+
+Modelo?                                Movimiento de existencias
+Activar                                Al guardar
+Antes de actualizar el dominio?        Conciliar todos los registros
+Aplicar en?                            Conciliar todos los registros
+Al actualizar?                         Producto
+
+
+for record in records:
+    if record.picking_id.picking_type_code == 'outgoing':
+        #verificación el tipo de documento
+        if not record.picking_id.origin:
+            #Si esta definido algun orgen del documento
+            product = env['product.product'].sudo().search (
+                            [('categ_id', 'ilike', "Consigna")]
+                            )
+            if record.product_id not in product:
+                raise UserError(('Si este movimiento es de Consignas todos los productos deben ser de Consignas.  \n %s. \n No pertenece a los productos de consigna .') % (record.product_id.name))
+                
