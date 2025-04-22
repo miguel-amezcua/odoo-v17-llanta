@@ -1,0 +1,55 @@
+Modelo?                            línea de la orden de venta
+
+Activar?                           Al guardar
+
+Antes de actualizar el dominio?    Coincidir todos los registros
+
+Aplicar en?                        Tipo de producto está en ( Producto almacenable )
+
+Costo <= 0 o Cantidad <= 0 o Precio unitario <= 0
+
+Mostrar                            tipo no está establecido
+
+for record in records:
+    if record.purchase_price == 0 and record.price_unit == 0 and record.product_uom_qty == 0:
+        continue
+    else:
+        if record.purchase_price <= 0:
+            raise UserError(('Es necesario que los productos almacenables \n %s.\n Contengan precio de costo \n \n record.id %s') % (record.name, record.id ))
+        if record.price_unit <= 0:
+            raise UserError(('Es necesario que los productos almacenables \n %s.\n Contengan precio unitario distinto   %s') % (record.name, record.price_unit))
+        if record.product_uom_qty <= 0:
+            #Sobre escritura de los valores 
+            record['purchase_price'] = 0
+            record['price_unit'] = 0
+            record['purchase_price'] = 0
+
+
+edicion de documentos de vista
+
+
+proveedor requerido cuando el tipo de produto es almacenable 
+
+
+3,812	         16            	sale.order.form.inherit.jasman.purchase.stock	                   jasman_sale_stock.view_order_form
+
+<xpath expr="//notebook/page[@name='order_lines']/field/tree/field[@name='name']" position="after">
+                <field name="supplier_id" required="[('is_purchased_form_branch', '=', True)] and not display_type"/>
+            </xpath>
+
+
+
+
+fase 2 staging1
+
+
+proveedor requerido cuando el tipo de produto es almacenable 
+
+
+3,812        	16	         sale.order.form.inherit.jasman.purchase.stock	                     jasman_sale_stock.view_order_form
+
+
+<xpath expr="//notebook/page[@name='order_lines']/field/tree/field[@name='name']" position="after">
+               <field name="supplier_id" required="[('product_type', '=', 'product'), ('is_purchased_form_branch', '=', True)] and not display_type"/>
+            </xpath>
+
