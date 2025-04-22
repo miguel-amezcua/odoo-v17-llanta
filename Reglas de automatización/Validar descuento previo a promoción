@@ -7,6 +7,11 @@
 #el sistema suma el porcentaje de la promoción con el valor asignado del descuento 
 #se requiere que icnore el valor del descuento previo al momento de de activar una promoción unicamente en la linea en cuestión
 
+Activar     Al guardar
+
+Al actualizar?   Linea de promoción
+
+
 # validation value
 service = False
 #Promotion Validation Cycle
