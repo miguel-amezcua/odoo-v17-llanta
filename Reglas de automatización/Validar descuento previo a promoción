@@ -1,0 +1,24 @@
+#Modulo :orden de venta
+
+#en las lineas de orden de venta (sale.order.line)
+
+#si un descuento se encuentra aplicado a una linea y se selecciona el boton de promociones
+
+#el sistema suma el porcentaje de la promoción con el valor asignado del descuento 
+#se requiere que icnore el valor del descuento previo al momento de de activar una promoción unicamente en la linea en cuestión
+
+# validation value
+service = False
+#Promotion Validation Cycle
+for line in record.order_line:
+    if line.is_reward_line:
+        service = True
+#Independent cycle
+if service == True:
+    for line_ in record.order_line:
+        if line_.promotion_ids:
+            ##Value of the promotion amount. Each line can have different promotions.
+            desc_ = line_.promotion_ids.reward_ids.discount
+            if line_.discount != desc_:
+                #Assign the percentage
+                line_.write({'discount': desc_ })
