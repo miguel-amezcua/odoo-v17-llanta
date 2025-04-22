@@ -1,0 +1,23 @@
+#Se presento una situación en la cual un usuario de sucursal modifico el nombre de un cliente que es de crédito (tiene Límite de crédito ).
+#Me ayuda a poner una restricción para que solo los usuario de crédito puedan modificar este tipo de clientes? (Cheque con German cuales son los usuarios de crédito para identificar si pertenecen a algún grupo).
+#Sobre los Proveedores, solo deberían ser modificados por el área de cuentas por pagar (apóyese con German al igual que con los clientes por favor) con la finalidad de identificarlo, hemos colocado la etiqueta "Proveedor" en este tipo de contactos.
+#El resto de usuarios podrían crear o modificar contactos que son de contado.
+
+[MA]Reglade edicion de usuario tipo proveedores
+Modelo?          Contacto
+
+Activar?          Al guarda
+
+proveedor = False
+if record.category_id:
+    for r in record.category_id:
+        #Comprobación de regla que valida la categoria asignada por el id 
+        if r.id in [1]:
+            proveedor = True 
+    if record._uid not in [437, 425, 432, 430, 436, 435, 429, 428, 438, 431, 426, 434, 433, 427] and proveedor == True:
+        # Solo los usuarios asignados podrian evadir el filtro asignado definidis por el id del usuario
+        raise UserError(('\nSolo los usuarios con el permiso de CUENTAS POR PAGAR pueden modificar usuarios con la etiqueta proveedor.'))
+
+
+
+por validar
