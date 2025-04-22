@@ -1,0 +1,33 @@
+#En el proceso de ventas al momento de generar las cotizaciones e ingresar los productos en las lineas de producto, se puede aplicar promociones entre los cuales pueden ser:
+#promociones,
+#cupones,
+#tarjetas de regalo,
+#tarjetas de lealtad,
+#monederos electrónicos,
+#códigos de descuento
+#códigos de descuento,
+#comprar X y recibe Y,
+#Cupones de la próxima orden.
+#Los cuales segun una serie de reglas y normas para aplicarse de forma correcta según se requiera. 
+#En algunos casos estas reglas pueden aplicar a solo alguna categoría de productos, a productos específicos o según alguna configuración predefinida por los responsables correspondientes.
+
+
+
+#El usuario de ventas deberá de tener un equipo de ventas, con esto nos aseguramos que los diarios y asignación de ubicación y almenes estén relacionados a su usuario.
+#Ser responsable de la veracidad de precios y servicios ofrecidos al cliente así como seguir las métricas propuestas por la empresa para la asignación de precios descuentos y promociones asignados en las cotizaciones.
+
+[MA] Registro de promociones en linea de cotizaciones
+
+Orden de venta 
+
+aplicar en:     [("order_line.product_id.line_id", "in", [4, 13, 15, 14, 5, 7, 503, 8, 504, 9, 505, 518, 6, 12, 11, 10, 517, 492])]
+
+service = False
+for line in record.order_line:
+    #Vañidacion de uso de promociones en la linea de producto
+    if line.is_reward_line:
+        service = True
+if service == False:
+    action = record.remove_discounts_from_sale_order()
+
+   
