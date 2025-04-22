@@ -1,0 +1,48 @@
+[MA] Movimientos con consignas  -[MA]restricción devoluciones- 
+
+#En los movimientos de almacén,(todos)
+#una vez validados, existe la forma de agregar lineas nuevas desde al mismo movimiento, 
+#esto es incorrecto  ya que al agregarse manualmente una vez que el documento ya se encuentra en proceso 
+#las líneas ingresadas no crean las ordenes de recibo, traslado interno, recolectar u ordenes de entrega
+#esta práctica solo es viable con una serie de productos particular denominados productos de consigna.
+#la forma correcta de la generación de nuevas lineas o movimientos de almacen nuevos para que se generen todos los movimientos necesarios y el flujo del sistema funcione de forma correcta es desde la ubicación de REABASTECIMIENTO
+#La forma correcta de generar nuevas líneas  en los movimientos de almacén existentes o generar nuevos movimientos de almacén para que el sistema generen todos los procesos y funciones necesarios para que el flujo del sistema funcione correctamente es desde la ubicación de REABASTECIMIENTO
+
+Inventario/Operaciones/Reabastecimiento
+
+se genera Reglas de automatización 
+
+[MA] Movimientos con consignas
+
+al guardar
+
+aplicar en :         ["|", ("origin", "=", False), ("product_id.categ_id", "in", [503, 504, 505, 517])]
+
+al actualizar        Producto
+
+msg = False
+for record in records:
+    if record._uid != 1:
+        if record.is_inventory == False:
+            if not record.origin_returned_move_id:
+                msg = True
+            else:
+                msg = False
+    if msg:
+        raise UserError(('No se puede agregar productos a un movimineto de inventario \nEl produto : %s.\n\nElimine la linea y puede ingresar su solicitud del este producto desde Reabastecimiento \n Inventario/Operaciones/Reabastecimiento \n \n') % (record.name))
+
+
+
+[MA] Restricción en devoluciones
+
+Movimientos de existencias
+
+Cambio de la IU
+
+al actualizar        producto
+
+if record.picking_id.origin:
+    if "Devolución de" in record.picking_id.origin:
+        raise UserError(('No se puede agregar productos a un movimiento de devolución \nMovimiento origen : %s.\n\n') % (record.picking_id.origin))
+
+Por validar
