@@ -1,9 +1,20 @@
+#Saludos @Miguel Angel Amezcua Ponce creo que podríamos seccionar este caso para que puedan ir saliendo
+
+#1.- Que no permitan Cotizaciones con Importe Cero. (este ya puede implantarse en Producción ya lo probe)
+
+#2.- Que solicite proveedor cuando sea un producto almacenable.
+#Aquí se corrige el filtro y seria solo a lo que se pueda comprar en sucursal (refacciones y manos de obra maquiladas),
+#El campo es el "Comprado en la Sucursal" = is_purchased_from_branch en el modelo product.template que sea TRUE. Cuando quede esta adecuación me avisas para probar
+
+#3.- Que No permita Costo=0 y en Precio =0 cuando sea un producto almacenable con Cantidad >0,
+#pero que si permita Cantidad = 0, Costo=0 y Precio =0 , para los casos que se tengan que quitar la linea y que no se pueda borrar.
+#( aqui es donde preguntas, quienes si lo pueden poner en ceros).
+#Yo sugiero que sea Sistemas, Auditores y Compras , aqui favor de confirmarlo con @Juan Manuel Yescas Estrada Manuel
+
+
 Modelo?                            línea de la orden de venta
-
 Activar?                           Al guardar
-
 Antes de actualizar el dominio?    Coincidir todos los registros
-
 Aplicar en?                        Tipo de producto está en ( Producto almacenable )
 
 Costo <= 0 o Cantidad <= 0 o Precio unitario <= 0
