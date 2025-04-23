@@ -1,0 +1,18 @@
+en la tabla porduct.product y product.template establecer el campo:
+
+
+
+Categoria de UNSPSC --unspsc_code_id
+
+
+
+como obligatorio 
+
+
+
+usuario responsable @Patricia Linda Castañeda Rios 
+
+modulo afectado indirectamente 
+
+compras /ventas /facturación
+
