@@ -1,0 +1,21 @@
+En las cotizaciones/ov los usuarios están pudiendo modificar la descripción de los productos, puede poner como solo lectura ese campo? o bloquear la edición?
+
+
+
+terminado 
+
+al ser una modificación simple que no de pende de condicionales u otros campos se realiza directo a producción, despues de ser probado en pre-prod  
+
+Cambio realizado en produccion 
+
+se detecto que en las ordenes de venta no se puede poner nota con el cambio realizado
+
+se elimino el cambio relizado para poder realizar el flujo esperado en las ordenes de venta 
+
+
+
+se analiza una nueva implementacion de llegar al objetivo planteado 
+
+ se logro realizar el ajuste solicitado 
+
+implementado directo a producción
