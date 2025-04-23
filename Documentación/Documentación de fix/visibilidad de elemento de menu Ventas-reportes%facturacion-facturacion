@@ -1,0 +1,13 @@
+visibilidad de elemento de menu Ventas/reportes
+
+ el usuario tiene el permiso de ventas  usuario: lementos propios 
+
+por lo cual no tiene visibilidad de menu reportes.
+
+
+
+se liga el menu reportes a   
+
+facturacion/facturacion
+
+permiso con el que cuentan los usuarios 
