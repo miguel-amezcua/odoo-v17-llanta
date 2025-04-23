@@ -1,0 +1,19 @@
+Cuando en la orden de recolección (PICK) se edite manualmente el campo "cantidad" colocándole un valor distinto
+al valor del campo "Demanda" y se valide con dicha cantidad, en la orden de entrega de mercancías (EIS) se beben 
+actualizar automáticamente estos valores en el campo "Cantidad"
+
+
+y/o debe aparecer el botón "Comprobar disponibilidad" que permita actualizar el valor correcto en el campo "Cantidad" 
+cuando el usuario de clic sobre él.
+
+[MA]actualizar la cantidad cuando es distinta a la demandada
+
+activar                    al guardar
+
+ for record in records:
+    if record.move_orig_ids:
+        lin_org = record.move_orig_ids.id
+        act_can = env['stock.move'].search([('id', '=', lin_org)])
+        if record.quantity != act_can.quantity:
+            record['quantity'] = act_can.quantity
+
