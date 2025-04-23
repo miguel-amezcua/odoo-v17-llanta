@@ -1,0 +1,40 @@
+Reportes de carta porte (modificacion Temporal)
+
+l10n_mx_edi_cartaporte_report_delivery_document
+
+id   3601
+
+line 134
+       <xpath expr="//th[@name='th_sm_weight']" position="after">
+            <t t-if="o.l10n_mx_edi_cfdi_state == 'sent'">
+                <th name="th_sm_price_line"><strong>Costo unitario</strong></th>
+            </t>
+        </xpath>
+        <xpath expr="//th[@name='th_sm_price_line']" position="after">
+            <t t-if="o.l10n_mx_edi_cfdi_state == 'sent'">
+                <th name="th_sm_amount_line"><strong>Total</strong></th>
+            </t>
+        </xpath>
+id   3602
+
+l10n_mx_edi_cartaporte_report_delivery_has_serial_move_line
+line 18
+<td>
+<span t-field="move_line.product_id.standard_price"/>
+ </td>
+  <td>
+ <span t-esc="move_line.quantity * move_line.product_id.standard_price"/>
+  </td>
+
+
+<td>
+                    <!--span t-field="move_line.product_id.price_unit">3.00</span-->
+                    <span t-field="move_line.product_id.standard_price">Price Unit</span>
+                </td>
+                <td>
+                    <span t-field="move_line.product_id">3.00</span>
+                    <p t-if="move_line.product_packaging_id">
+                        <t t-set="total" t-value="move_line.quantity"/>
+                        <span t-filed="move_line.product_id.standard_price * total"/>
+                    </p>
+                </td>
