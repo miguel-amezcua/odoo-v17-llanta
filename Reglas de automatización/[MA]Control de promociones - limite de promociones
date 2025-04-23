@@ -1,0 +1,16 @@
+Control de promociones
+
+En una mismo orden de venta esta proibido la utilizacion de mas de una promocion por linea de orden de venta 
+actualmente se puede elegir la promoción a asignar pero el usuario puede forzar a tener mas de una seleccionada 
+si el usuario intenta forzar al sistema para aplicar mas de una promoción debera de saltar un cuadro de dialogo indicando que esto no es posible 
+
+[MA]Control de promociones
+
+Modelo?                          Orden de venta
+Activar?                         Al guardar
+
+Aplicar en                       [("promotion_line_ids", "!=", False)]
+
+
+if len(record.promotion_line_ids.ids) > 1:
+    raise UserError(f"Solo se puede aplicar una promoción a la orden de venta.")
