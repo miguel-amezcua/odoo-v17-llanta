@@ -1,0 +1,26 @@
+#modulo:                ventas 
+#se requiere el bloqueo de guardar las cotizaciones cuando estas no contengan lineas 
+#esto por que no se realiza la correcta estimación de ventas y facturación en tienpo real y no permite tener una estimación de venta 
+#de igual manera impacta en la  facturación, ya que se carga en trabajo al final de mes.
+#resultado propuesto 
+
+#Nota: 
+
+#Este bloque funciona al no contener ninguna linea en la orden de venta 
+#Este bloque se detona al guardar  y no afecta a cotizaciones ya generadas sin productos 
+#Este bloque puede ser saltado utilizando  agregandfo una nota o una seccion
+implementado en servidor :pre-prod
+
+https://grupo-jasman-pre-prod-15413502.dev.odoo.com/web?debug=1#id=8287&cids=1&menu_id=315&action=519&model=sale.order&view_type=form
+
+Reglas de automatización
+
+[MA] Numero de lineas en cotizaciones
+
+Modelo?                               Orden de venta
+Activar                               Al guardar
+Antes de actualizar el dominio?       [("partner_id.company_id", "!=", False)]
+Aplicar en?                           [("order_line", "=", False)]
+Al actualizar?                        Null
+
+raise UserError(('\nNo es posible guardar cotizaciones sin productos'))
