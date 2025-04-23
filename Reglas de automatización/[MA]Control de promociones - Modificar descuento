@@ -1,0 +1,17 @@
+No esta permitido una vez aplicado el descuento  
+--- originado de la accion env[sale.order].action_open_reward_wizard()
+--- desecadenado de prosionar el boton promociones
+
+no esta permitido modificar un valor de descuento una vez que ya esta registrada la utilizacion de una promocion 
+Se requiere que al momoento de detectarce el caso indicado, generar una ventana de dialogo que indique al usuario que esta accion esta restringida
+acto seguido restablesca los valores correctos 
+
+
+[MA]Control de promociones - Modificar descuento
+Modelo?                            Línea de la orden de venta
+Activar?                           Al cambio de la IU
+Al actualizar                      Descuentos
+
+if record.promotion_ids:
+    raise UserError(f"No se puede modificar el descuento si se ha aplicado una promoción")
+
