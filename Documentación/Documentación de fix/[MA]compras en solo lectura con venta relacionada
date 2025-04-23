@@ -1,0 +1,79 @@
+#[MA]solo lectura con venta relacionada
+#
+#se solicito que el campo las lineas en en modulo de compras (purchase.order)
+#se mantubiera como de solo lectura para todos los usuartios cuando existiera una relacion con una venta realiconada 
+#
+#--- se solilicito la regla de solo lecura se realizara directo sobe  la vista . ---
+#
+#se ajustaron los requerimeintos y se establecio que el producto y sus derivados 
+#[REL0038] BATERIA (CON CASCO A CAMBIO)
+#
+#RBT Casco a Cambio  - servicio -- es rebate    se debe poder modificar en la compra 
+#es rebate  = true      se puede modificar en la compra
+#
+
+id    1376
+
+Ver nombre?                      purchase.order.form.inheritw
+Ver tipo?                        Formulario
+Modelo de la vista?              Orden de compra
+Secuencia?                       16
+Vista heredada?                  purchase.order.form
+Modo de herencia de la vista?    Vista de extensión
+Datos del modelo?                purchase.order.form.inherit
+ID externo?                      purchase_stock.purchase_order_view_form_inherit
+
+
+lines 18
+            <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_qty']" position="after">
+                <field name="forecasted_issue" column_invisible="True"/>
+                <button type="object" name="action_product_forecast_report" title="Forecast Report" icon="fa-area-chart" invisible="not id or not forecasted_issue or product_type != 'product'" class="text-danger"/>
+                <button type="object" name="action_product_forecast_report" title="Forecast Report" icon="fa-area-chart" invisible="not id or forecasted_issue or product_type != 'product'"/>
+                <field name="is_rebate" column_invisible="True"/>
+                <field name="sale_order_id" column_invisible="True"/>
+            </xpath>
+linea 24
+
+linea 49
+<xpath expr="//field[@name='order_line']/tree//field[@name='analytic_distribution']" position="before">
+                <field name="propagate_cancel" groups="base.group_no_one" optional="hide" readonly="sale_order_id and not is_rebate or product_id not in [22917, 22923, 23254, 23404, 23490, 23526, 23615, 23882, 24026, 24268, 24512, 24695, 24749, 24905, 25063, 25071, 25099, 25338, 25683, 25844, 25993, 26049, 26317, 26469, 26569, 26615]"/>
+            </xpath>      
+linea51
+
+linea 65
+<xpath expr="//page/field[@name='order_line']/tree/field[@name='propagate_cancel']" position="attributes">
+                <attribute name="readonly">sale_order_id and is_rebate != True or product_id not in [22917, 22923, 23254, 23404, 23490, 23526, 23615, 23882, 24026, 24268, 24512, 24695, 24749, 24905, 25063, 25071, 25099, 25338, 25683, 25844, 25993, 26049, 26317, 26469, 26569, 26615]</attribute>
+                <attribute name="groups">base.group_no_one</attribute>
+                <attribute name="optional">hide</attribute>
+                <attribute name="groups">base.group_no_one</attribute>
+            </xpath>
+	​<xpath expr="//page/field[@name='order_line']/tree/field[@name='name']" position="attributes">
+                <attribute name="readonly">sale_order_id and is_rebate != True or product_id not in [22917, 22923, 23254, 23404, 23490, 23526, 23615, 23882, 24026, 24268, 24512, 24695, 24749, 24905, 25063, 25071, 25099, 25338, 25683, 25844, 25993, 26049, 26317, 26469, 26569, 26615] and not display_type </attribute>
+            </xpath>
+            <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_qty']" position="attributes">
+                <attribute name="readonly">sale_order_id and is_rebate != True and product_id not in [22917, 22923, 23254, 23404, 23490, 23526, 23615, 23882, 24026, 24268, 24512, 24695, 24749, 24905, 25063, 25071, 25099, 25338, 25683, 25844, 25993, 26049, 26317, 26469, 26569, 26615]</attribute>
+            </xpath>
+            <xpath expr="//page/field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
+                <attribute name="readonly">sale_order_id and is_rebate != True and product_id not in [22917, 22923, 23254, 23404, 23490, 23526, 23615, 23882, 24026, 24268, 24512, 24695, 24749, 24905, 25063, 25071, 25099, 25338, 25683, 25844, 25993, 26049, 26317, 26469, 26569, 26615]</attribute>
+            </xpath>
+            <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_packaging_id']" position="attributes">
+                <attribute name="readonly">sale_order_id and is_rebate != True and product_id not in [22917, 22923, 23254, 23404, 23490, 23526, 23615, 23882, 24026, 24268, 24512, 24695, 24749, 24905, 25063, 25071, 25099, 25338, 25683, 25844, 25993, 26049, 26317, 26469, 26569, 26615]</attribute>
+            </xpath>
+            <xpath expr="//page/field[@name='order_line']/tree/field[@name='date_planned']" position="attributes">
+                <attribute name="readonly">sale_order_id and is_rebate != True and product_id not in [22917, 22923, 23254, 23404, 23490, 23526, 23615, 23882, 24026, 24268, 24512, 24695, 24749, 24905, 25063, 25071, 25099, 25338, 25683, 25844, 25993, 26049, 26317, 26469, 26569, 26615]</attribute>
+            </xpath>
+            <xpath expr="//page/field[@name='order_line']/tree/field[@name='analytic_distribution']" position="attributes">
+                <attribute name="readonly">sale_order_id and is_rebate != True and product_id not in [22917, 22923, 23254, 23404, 23490, 23526, 23615, 23882, 24026, 24268, 24512, 24695, 24749, 24905, 25063, 25071, 25099, 25338, 25683, 25844, 25993, 26049, 26317, 26469, 26569, 26615]</attribute>
+            </xpath>
+            <xpath expr="//page/field[@name='order_line']/tree/field[@name='discount']" position="attributes">
+                <attribute name="readonly">sale_order_id and is_rebate != True or product_id not in [22917, 22923, 23254, 23404, 23490, 23526, 23615, 23882, 24026, 24268, 24512, 24695, 24749, 24905, 25063, 25071, 25099, 25338, 25683, 25844, 25993, 26049, 26317, 26469, 26569, 26615]</attribute>
+            </xpath>
+            <xpath expr="//page/field[@name='order_line']/tree/field[@name='taxes_id']" position="attributes">
+                <attribute name="readonly">sale_order_id and is_rebate != True or product_id not in [22917, 22923, 23254, 23404, 23490, 23526, 23615, 23882, 24026, 24268, 24512, 24695, 24749, 24905, 25063, 25071, 25099, 25338, 25683, 25844, 25993, 26049, 26317, 26469, 26569, 26615]</attribute>
+                <attribute name="required">not display_type</attribute>
+                <attribute name="options">{'no_open': True}</attribute>
+                <attribute name="force_save">1</attribute>
+                <attribute name="optional">show</attribute>
+                <attribute name="domain">[('type_tax_use', '=', 'purchase'), ('company_id', 'parent_of', parent.company_id), ('country_id', '=', parent.tax_country_id), ('active', '=', True)]</attribute>
+            </xpath>
+linea 99
