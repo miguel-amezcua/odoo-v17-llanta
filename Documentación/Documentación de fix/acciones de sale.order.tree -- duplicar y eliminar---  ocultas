@@ -1,0 +1,27 @@
+acciones de sale.order.tree duplicar y eliminar ocultas
+
+Este cambio se priorizo ya que se tenia una alta insidencia  de duplicacion de manera masiva  de ordenes de venta y cotizaciones por causa de error al dar clic fuera del campo correcto 
+
+generando numerosos duplicados de forma instantanea directo en produccion 
+
+ id 1425      afectacion a la linea 3 y 4 
+
+a la tabla de sale.order.tree.
+
+<tree position="attributes">
+                <attribute name="string">Sales Orders</attribute>
+                <attribute name="duplicate">False</attribute>
+                <attribute name="delete">False</attribute>
+            </tree>
+
+sale.order.tree(orders)
+afectacion a la linea 3 y 4
+
+<xpath expr="//tree" position="attributes">
+                <attribute name="banner_route">/onboarding/sale_quotation</attribute>
+                <attribute name="duplicate">False</attribute>
+                <attribute name="delete">False</attribute>
+            </xpath>
+
+aplicado a produccion 
+
