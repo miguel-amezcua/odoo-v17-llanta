@@ -1,0 +1,45 @@
+Cambios aplicados en produccion 
+
+
+
+Acciones palificadas:
+
+
+
+contac = env['res.partner'].search(['|', '|', '|', '|', '|', '|', '|', '|', ('name','ilike', ','), ('name','ilike', 'sa'), ('name','ilike', 's.a'), ('name','ilike', 'SA DE CV'), ('name','ilike', 'cv'), ('name','ilike', 'c.v'), ('name','ilike', 's.c'), ('name','ilike', 'sc'), ('name','ilike', 'SAPI')])
+for record in contac:
+    if record.name in 'SAPI DE CV':
+        record.name.replace('SAPI DE CV', '')
+        #pos_name = record.name
+    if record.name in 'S.A DE C.V':
+        record.name.replace('S.A DE C.V', '')
+    if record.name in 'DE C.V':
+        record.name.replace('DE C.V', '')
+    if record.name in 'S DE RL ':
+        record.name.replace('S DE RL ', '')
+    if record.name in 'S.A.B. ':
+        record.name.replace('S.A.B.', '')
+    if record.name[-3:] == ' SC':
+        record.name.replace(' SC', '')
+    if record.name[-3:] == 'S.C':
+        record.name.replace('S.C', '')
+    if record.name in 'SA CV':
+        record.name.replace('SA CV', '')
+    if record.name[-3:] == 'S.A':
+        record.name.replace('S.A', '')
+    if record.name in 'S DE R l':
+        record.name.replace('S DE R L', '')
+    if record.name[-3:] == 'S A':
+        record.name.replace('S A', '')
+    if record.name in 'SAS DE CV':
+        record.name.replace('SAS DE CV', '')
+    if record.name in 'S A DE C V':
+        record.name.replace('S A de C V', '')
+    if record.name in 'SA de CV':
+        record.name.replace('SA de CV', '')
+    if record.name in 'SA DE CV':
+        record.name.replace('SA DE CV', '')
+    if record.name[-4:] == 'S.A.':
+        record.name.replace('S.A.', '')
+    n_name = record.name
+    record['name'] = n_name
