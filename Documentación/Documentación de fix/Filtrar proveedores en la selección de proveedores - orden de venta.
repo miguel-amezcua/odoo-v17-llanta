@@ -1,0 +1,8 @@
+---Filtrar proveedores en la selección de proveedores en lo orden de venta. --- completado
+
+Cambio realizado desde herramienta de visual 
+
+model:   sale.order.line
+campo:   supplier_id
+domain:  [("category_id", "in", [1])]
+     ___   Hecho   ____
