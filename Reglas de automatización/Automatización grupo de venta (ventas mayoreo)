@@ -1,0 +1,13 @@
+#Corregir el grupo de venta para usuarios 1010
+#bloqueo de campo para uso exclusivo de de personal de sistemas
+#
+#INGRESADO A PRODUCCION  el 03/09/2024
+#
+#nombre de la regla automatizada:    Fix[MA] Automatización de equipo de ventas
+#
+#campo aplicado el cambio o desarrollo: equipo de venta
+#ubicación del campo: ventas/cotizacion/otra información/equipo de venta    
+
+
+if record.user_id:
+    record['team_id']  = env['crm.team'].search([('member_ids.id','=', record.user_id.id)], limit=1) 
