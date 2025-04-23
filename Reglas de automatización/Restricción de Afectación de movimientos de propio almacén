@@ -1,0 +1,53 @@
+#Restricción de Afectación de movimientos de propio almacén
+
+#Se requiere restringir que el usuario solo pueda registrar/validar movimientos en el almacén que tiene asignado.
+#Para sucursales la regla es simple ya que solo tienen un almacén.
+#Para cedis es necesario evaluar la mejor forma de realizarlo, ya que se pueden tener varios almacenes además del principal, como lo son los de consigna.
+
+ #inconssitencias en creación de documentos, ubicaciones donde se interfiere la creacion por la cual no se llega al la finalidad del requerimeinto 
+
+ #Inventario/Operaciones/Reabastecimiento      lista/ check en linea de producto  (multiples productos, multiples alamacenes  )    boton "Orden" 
+	​	​	​	​	​	​	​    lista / boton "ordenar una vez " linea por linea 
+
+inventario/informacion general / Recibos                                         
+          Nuevo /edicion de existentes
+       ​   Traslados internos
+	​	​	​	​	​Órdenes de entrega
+	​	​	​	​	​Recibidos
+	​	​	​	​	​Recolectar 
+
+ventas/cotizaciones /crear ordenes de compras
+	​	​	​   Confirmar orden de venta
+
+compras/ordenes de compras 
+
+Fabricacion (no utilizado)
+
+todas las opciones antes mensionadas pueden detonar o generar movimientos de almacen, estas pueden ser creadas por el usuario que manuipula el sistema 
+
+como por odoobot de manera automatica al confirmar algun movimiento en un modulo relacionado  
+
+user = env['res.users'].search([('user_ids','=', record._uid)])
+if user.property_warehouse_id:
+    if user.property_warehouse_id.view_location_id.id not in [1247, 773, 1187, 1397, 1505, 1507, 1519, 1517 ]:
+        time = datetime.datetime.now().strftime('%H:%M:S')
+        record["note"]= time, datetime.datetime.now()
+        if record.picking_type_code in ["incoming"]:
+            if user.property_warehouse_id.view_location_id.id != record.location_id.location_id.id:
+                if user.property_warehouse_id.view_location_id.id != record.location_dest_id.location_id.id:
+                    raise UserError((' %s. \n No esta permitido \n %s.\n almacen correspondiente \n \n %s \n %s \n %s\n %s \n %s \n  \n entrega') % (user.name, user.property_warehouse_id.name, record.id, record.picking_type_code, record.location_dest_id.location_id, record.location_dest_id.name, user.property_warehouse_id.view_location_id.id  ))
+
+        if record.picking_type_code in ["outgoing"]:
+            if user.property_warehouse_id.view_location_id.id != record.location_id.location_id.id:
+                if record.create_uid.id == 1:
+                    record["note"]= user.id, record.picking_type_code, record._uid, record._uid, record.id, record.create_uid, record.create_uid.property_warehouse_id 
+                else:
+                    raise UserError((' %s. \n No esta permitido   \n %s.\n Puedes comunicarte  \n \n %s \n %s \n %s\n %s.\n  %s \n  \n Salida') % (user.name, user.property_warehouse_id.name, record.id, record.picking_type_code, record.location_id, record.create_uid, record.create_uid.property_warehouse_id  ))
+
+        if record.picking_type_code in ["internal"]:
+            if user.property_warehouse_id.view_location_id.id != record.location_id.location_id.id or user.property_warehouse_id.view_location_id.id != record.location_dest_id.location_id.id:
+                if record.create_uid.id == 1:
+                    record["note"]= user.id, record.picking_type_code, record._uid, record._uid, record.id, record.create_uid, record.create_uid.property_warehouse_id 
+                else:
+                    raise UserError((' %s. \n No esta permitido \n %s.\n almacen correspondiente \n \n %s \n %s \n %s\n %s \n %s \n  \n interno') % (user.name, user.property_warehouse_id.name, record.id, record.picking_type_code, record.location_dest_id.location_id, record.create_uid, record.create_uid.property_warehouse_id    ))
+
