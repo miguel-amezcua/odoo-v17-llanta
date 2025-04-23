@@ -1,0 +1,11 @@
+Automatizacion crear contacto (dimensión canal)
+
+Reglas de automatización
+
+fix[MA] asignación de dimensión canal
+
+Detalles de la acción
+
+ActualizarCalcular
+
+Dimensión canal   para  [C-SUC] Sucursal
