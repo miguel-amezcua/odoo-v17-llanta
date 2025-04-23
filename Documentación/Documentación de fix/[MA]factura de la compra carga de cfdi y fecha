@@ -1,0 +1,22 @@
+[MA]factura de la compra carga de cfdi y fecha
+
+priorisar el llenado de la fecha antes del cfdi
+
+cambio de la metricas en donde debe de aplicar la regla de 
+
+<field name="invoice_date" nolabel="1" options="{'warn_future': true}" invisible="move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt')" readonly="state != 'draft'" required="move_type in ['out_refund', 'in_invoice', 'in_receipt', 'in_refund']"/>
+a 
+<field name="invoice_date" nolabel="1" options="{'warn_future': true}" invisible="move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt')" readonly="state != 'draft'" required="move_type in ['in_invoice']"/>
+
+view.move.form.inherit.jasman.l10n.mx.account ----- eliminar de studio lo referente al boton add cfdi 
+11
+
+de 
+                <button name="935" type="action" string="Add CFDI" class="btn-secondary" invisible="move_type not in ('in_invoice', 'in_receipt') or cfdi_processed or state != 'draft'" />
+a
+                <button name="935" type="action" string="Add CFDI" class="btn-secondary" invisible="move_type not in ('in_invoice', 'in_receipt') or cfdi_processed or state != 'draft'" readonly="not invoice_date"/>
+
+view.move.form.inherit.jasman.l10n.mx.account
+<xpath expr="//button[@name='935']" position="before">
+                <div class="alert alert-info" role="alert" invisible="invoice_date or move_type not in ('in_invoice', 'in_receipt')">Primero debe ingresar la fecha de la factura, la fecha debe corresponder con la fecha de CFDI</div>
+            </xpath>
