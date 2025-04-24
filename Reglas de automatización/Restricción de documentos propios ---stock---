@@ -1,0 +1,25 @@
+*  El sistema no debe permitir a los usuarios de sucursal crear órdenes de solicitud de reabastecimiento (SOL) desde almacenes
+de sucursales y/o CEDIS que no le corresponden.
+ permite crear, pero no solicitar 
+
+
+
+*  El sistema no debe permitir a los usuarios de CEDIS crear órdenes de solicitud de reabastecimiento (SOL) desde almacenes de 
+sucursales y/o CEDIS que no le corresponden.
+ los puntos anteriores deben de gestionarse con el valor del campo """Almacenes permitidos"""
+
+*  El sistema no debe permitir a los usuarios de sucursal o de CEDIS editar las solicitudes de reabastecimiento (SOL) en estado "Borrador" 
+que fueron generadas por usuarios de otras sucursales u otros CEDIS.
+
+
+*  El sistema no debe permitir a los usuarios de sucursal o de CEDIS cancelar solicitudes de reabastecimiento (SOL) que fueron generadas 
+por usuarios de otras sucursales u otros CEDIS.
+
+Las reglas de color amarillo deben de gestionarse con el valor del campo """Almacén predeterminado"""  
+
+
+Restricción de documentos propios
+picking_type_code", "=","replenishment"
+
+invisible="code != 'replenishment' and warehouse_id not in user.property_warehouse_id"
+invisible="code != 'replenishment' and 'warehouse_id.id', 'in', user_ids.property_warehouse_id.id"
