@@ -1,0 +1,15 @@
+Los valores de los campos "Cantidad" contenidos en la solicitud de reabastecimiento (SOL) se deben actualizar automáticamente 
+con los valores de las cantidades validadas en la orden de entrega de materiales (EIS) correspondiente, 
+siempre que exista cantidad disponible en la ubicación en tránsito, y/o debe aparecer el botón "Comprobar disponibilidad" 
+que permita actualizar el valor correcto en el campo "Cantidad" cuando el usuario de clic sobre él
+
+[MA]actualizar la cantidad en sol y int provenientes de eis
+
+al guardar
+
+[("picking_code", "in", ["outgoing", "incoming", "replenishment"])]
+
+for record in records:
+    lin_rel = record.move_dest_ids.id
+    act_can = env['stock.move'].search([('id', '=', lin_rel)])
+    act_can.write({'quantity': record.quantity})
