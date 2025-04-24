@@ -1,0 +1,16 @@
+#El sistema no debe permitir validar la orden de solicitud de reabastecimiento (SOL) 
+#para la cual no ha sido validada la orden de entrega de materiales (EIS) correspondiente.
+
+[MA]SI EIS != DONE SOL IS ASSIGNED
+Modelo                     TRASLADAR
+ejecutar                   AL GUARDAR
+
+[("picking_type_code", "in", ["replenishment", "incoming"])]
+
+
+for lin in record.move_ids:
+    if lin.move_orig_ids:
+	      if lin.move_orig_ids.picking_id.state != ["done"]:
+            if record.state == 'assigned':
+                record['is_able_to_validate'] = False
+                record['state'] = 'confirmed'
