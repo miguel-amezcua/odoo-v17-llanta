@@ -1,0 +1,15 @@
+Al dar clic en el botón "Devolver" en la orden de entrega de materiales (EIS) el sistema no debe permitir al usuario seleccionar una ubicación 
+que no corresponda con la naturaleza de la operación.
+
+Correccion:
+
+En el modulo de inventario
+
+inventario/Configración/Ubicaciones/
+
+Selecionamos la ubicacion que se presente como ubicación de devolución, ingresamos 
+
+desmarcamos la casilla ¿Es ubicacion de devolución? si esta marcada la desmarcamos 
+
+recargamos la pagina y ya no la contempla como ubicacion de devolución 
+
