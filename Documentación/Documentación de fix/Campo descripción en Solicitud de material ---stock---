@@ -1,0 +1,30 @@
+Revisar que se pueda habilitar en el formulario de soi
+
+
+
+La columna descripcion se asigno a correctamente en los movimientos SOL, de forma editable,  sin embargo las anotaciones 
+en el campo de descripcion  actualmente no son vicibles en los distintos formatos de impreción.
+
+Cambio realizado con odoo estudio:
+
+picking_code != "replenishment" 
+
+para validación 
+
+
+Cambio definitivo, creacion de vista heredada  
+
+Ver nombre?               jsmn.stock.picking.form.move_01
+Ver tipo?                 form
+
+Clave?                    Modelo de la vista? Trasladar
+
+<data><xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='name']" position="attributes">
+                <attribute name="column_invisible">parent.picking_type_code != 'replenishment'</attribute>
+            </xpath>
+</data>
+
+studio 
+  <xpath expr="//field[@name='description_picking']" position="attributes">
+    <attribute name="options">{"line_breaks":true}</attribute>
+  </xpath>
