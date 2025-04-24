@@ -1,0 +1,28 @@
+Cuando en la orden de solicitud de reabastecimiento (SOL) se edite manualmente el campo "cantidad" colocándole un valor distinto
+al valor del campo "Demanda" debe aparecer el botón "Comprobar disponibilidad" que permita actualizar el valor correcto en el 
+campo "Cantidad" cuando el usuario de clic sobre él.
+
+
+La restricción debe excluir administradores para posible apoyo con incidentes
+
+
+
+El boton de "Comprobar disponibilidad" en las solicitudes SOL al momento de que se encuentre una diferencia en las cantidades
+de demanda y cantidad muestra el boton cuando esta en el estado comprobar disponibilidad y en espera.
+
+
+
+[MA]no permitir editar en orden confirmada
+
+al guardar
+
+ movimientos de inventario
+
+[("state", "in", ["waiting", "confirmed"])]
+
+button = False
+for lin in move_ids:
+    if lin.quantity != '0':
+        if lin.quantity != lin.product_uom_qty:
+            button = True
+record['show_check_availability'] = button
