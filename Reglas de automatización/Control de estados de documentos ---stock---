@@ -1,0 +1,77 @@
+*  El sistema no debe permitir a los usuarios de sucursal o de CEDIS cancelar una orden de solicitud de reabastecimiento (SOL)
+en estado "En espera de otra operación".
+ 
+*  El sistema no debe permitir a los usuarios de sucursal o de CEDIS cancelar una orden de solicitud de reabastecimiento (SOL)
+cuya orden de entrega de materiales (EIS) correspondiente ya fue validada.
+*** Respuesta *** El sistema no permite a los usuarios de sucursal o de CEDIS cancelar una orden de solicitud de reabastecimiento (SOL) 
+cuya solicitud de entrega de materiales (EIS) correspondiente ya fue validada.
+
+*   El sistema no debe permitir a los usuarios de sucursal hacer devoluciones parciales de una orden de recolección (PICK) 
+cuya orden de entrega de materiales (EIS) correspondiente ya fue cancelada.
+ 
+
+*   El sistema debe permitir a usuarios administradores realizar devoluciones de órdenes de entrega de materiales (EIS) 
+para las cuales no ha sido validada recepción en la orden de solicitud de reabastecimiento (SOL) correspondiente.
+ 
+
+*  El sistema debe permitir a usuarios administradores realizar devoluciones de órdenes de solicitud de reabastecimiento (SOL)
+siempre y cuando estos productos recibidos no hayan sido consumidos ya en transacciones posteriores.
+
+[MA]no permitir crear si no es tu almacén
+Modulo                            Trasladar
+se ejecuta                        al guardar 
+
+["&", ("picking_type_code", "in", ["replenishment", "incoming"]), ("state", "=", "draft")]
+
+if record._uid != 1:
+    user = env['res.users'].search([('user_ids','=', record._uid)])
+    if user.property_warehouse_id:
+        if user.property_warehouse_id.id != record.warehouse_id.id:
+            raise UserError(('Solo se pueden editar "Solicitudes de reabastecimiento" definidas como tu almacén predeterminado. \n 
+                             Tu almacen predeterminado es: %s. \n El almacén que estas editando es: %s   ') 
+                                      %
+                            (user.property_warehouse_id.name, record.warehouse_id.name)
+                           )
+
+**************************************************************************************************
+[MA]actualizar la cantidad en sol y int provenientes de eis
+al guardar
+[("picking_code", "in", ["outgoing", "incoming", "replenishment"])]
+for record in records:
+    lin_rel = record.move_dest_ids.id
+    act_can = env['stock.move'].search([('id', '=', lin_rel)])
+    act_can.write({'quantity': record.quantity})
+**************************************************************************************************
+[MA]no permitir editar en orden confirmada
+al guardar
+ movimientos de inventario
+[("state", "in", ["waiting", "confirmed"])]
+button = False
+for lin in move_ids:
+    if lin.quantity != '0':
+        if lin.quantity != lin.product_uom_qty:
+            button = True
+record['show_check_availability'] = button
+**************************************************************************************************
+[MA]actualizar la cantidad en eis desde pick
+movimientos de existiencias 
+al guardar 
+[("picking_code", "=", "outgoing")]
+for record in records:
+    if record.picking_id.state == 'assigned':
+        if record.move_orig_ids:
+            lin_org = record.move_orig_ids.id
+            act_can = env['stock.move'].search([('id', '=', lin_org)])
+            if record.quantity != act_can.quantity:
+                record['quantity'] = act_can.quantity
+
+[("picking_code", "=", "outgoing")]
+for record in records:
+    if record.picking_id.state == 'assigned':
+        if record.move_orig_ids:
+            lin_org = record.move_orig_ids.id
+            act_can = env['stock.move'].search([('id', '=', lin_org)])
+            if record.quantity != act_can.quantity:
+                record['quantity'] = act_can.quantity
+
+**************************************************************************************************
