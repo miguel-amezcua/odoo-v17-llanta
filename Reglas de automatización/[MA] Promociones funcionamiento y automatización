@@ -29,5 +29,5 @@ for line in record.order_line:
         service = True
 if service == False:
     action = record.remove_discounts_from_sale_order()
-
+action = record.action_open_reward_wizard()
    
