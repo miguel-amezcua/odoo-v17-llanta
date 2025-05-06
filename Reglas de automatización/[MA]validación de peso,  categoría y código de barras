@@ -1,0 +1,32 @@
+Es prioritario la que asignación de los siguientes campos al momento de la creación de un producto  (product.product)
+
+Datos forzosos al crear un producto:
+Peso
+código de barras  
+Referencia interna 
+categoría o grupo menor
+
+
+Esto solo se debe de ejecutar y solicitar el llenado cuando el producto sea creado, no debe de aplicar para productos ya existentes en la base de datos de jasman  
+
+
+
+[MA]validación de peso,  categoría y código de barras
+
+Modelo?                                       Variante del producto
+Activar?                                         Al guardar
+
+
+aplicar en: ["|", "|", "|", ("weight", "<=", 0), ("barcode", "=", False), ("default_code", "=", False), ("categ_id", "=", False)]
+
+
+if record.detailed_type == 'product':
+    #Validación de solo aplicar la regla solo productos nuevos 
+    t_time = datetime.datetime.now() - record.create_date
+    if t_time.days < 1:
+        if not record.categ_id or record.categ_id.id == 1:
+            raise UserError("El producto debe tener una categoría asignada (Grupo Menor).")
+        if not record.barcode or not record.default_code:
+            raise UserError(("El producto debe tener establecido un codigo de barras %s y la referencia interna %s.") % (record.barcode, record.default_code))
+        if record.weight <= 0.0:
+            raise UserError(("El peso debe de ser distinto a %s ") % (record.weight))
